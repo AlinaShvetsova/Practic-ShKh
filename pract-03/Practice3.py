@@ -13,10 +13,10 @@ arr1 = [[1], [1, 2], [1, 2, 3]]
 print('Матрица  \n', arr1)
 
 arr2 = np.zeros((3, 2))
-print('Матрица с заданными значениями 2 \n', arr2)
+print('Матрица с нулевыми значениями 2 \n', arr2)
 
 arr3 = np.ones((2, 3))
-print('Матрица с нулевыми значениями \n', arr3)
+print('Матрица с единичными значениями \n', arr3)
 
 arr4 = np.random.randint(2, 6, (3, 3))
 print('Матрица с случайными целочисленными значениями \n',arr4)
@@ -28,35 +28,34 @@ print(data)
 
 # ЗАДАНИЕ №3
 data1 = scipy.io.loadmat(r'D:\Папка\Учеба\5 семестр\ОКИтД. Практические задания\Практика №3\data\1D\var3.mat')
-data1.keys()
-data1 = data1['n']
-maxx = np.max(data1) # максимальная 
+dataA = data1['n']
+maxx = np.max(dataA) # максимальная 
 print('Рассчет максимального = ', maxx)
 
-minn = np.min(data1) # минимальная 
+minn = np.min(dataA) # минимальная 
 print('Рассчет минимального = ', minn)
 
-med = np.median(data1) # медиана
+med = np.median(dataA) # медиана
 print('Рассчет медианы = ', med)
 
-mato = np.mean(data1) # мат. ожидание
+mato = np.mean(dataA) # мат. ожидание
 print('Рассчет математического ожидания = ', mato)
 
-dis = np.var(data1) # дисперсия
+dis = np.var(dataA) # дисперсия
 print('Рассчет дисперсии = ',dis)
 
-srotk = np.std(data1) # среднеквадратическое отклонение 
+srotk = np.std(dataA) # среднеквадратическое отклонение 
 print('Рассчет среднеквадратического отклонения = ', srotk)
 
 # ЗАДАНИЕ №4
-plt.plot(data1)
+plt.plot(dataA)
 plt.show()
-mean = np.mean(data1) * np.ones(len(data1))
-var = np.var(data1) * np.ones(len(data1))
-plt.plot(data1, 'b-', mean, 'r-', mean-var, 'g--', mean+var, 'g--')
+mean = np.mean(dataA) * np.ones(len(dataA))
+var = np.var(dataA) * np.ones(len(dataA))
+plt.plot(dataA, 'b-', mean, 'r-', mean-var, 'g--', mean+var, 'g--')
 plt.grid()
 plt.show()
-plt.hist(data1, bins=20)
+plt.hist(dataA, bins=20)
 plt.grid()
 plt.show()
 
@@ -71,27 +70,26 @@ def autocorrelate(a):
   cor.append(np.corrcoef(a1, a2)[0, 1])
  return np.array(cor)
 
-data1 = np.ravel(data1)
-cor = autocorrelate(data1)
+dataA = np.ravel(dataA)
+cor = autocorrelate(dataA)
 plt.plot(cor)
 plt.show()
 
 # ЗАДАНИЕ №6
 data2 = scipy.io.loadmat(r'D:\Папка\Учеба\5 семестр\ОКИтД. Практические задания\Практика №3\data\ND\var2.mat')
-data2.keys()
-data2 = data2['mn']
+dataB = data2['mn']
 
 # ЗАДАНИЕ №7
-n = data2.shape[1]
+n = dataB.shape[1]
 corr_matrix = np.zeros((n, n))
 for i in range(0, n):
   for j in range(0, n):
-    col = data2[:, i] # выбор i-го столбца 
-    col2 = data2[:, j] # выбор j-го столбца 
+    col = dataB[:, i] # выбор i-го столбца 
+    col2 = dataB[:, j] # выбор j-го столбца 
     corr_matrix[i,j] = np.corrcoef(col, col2)[0, 1]
 np.set_printoptions(precision=2)
 print(corr_matrix)
 
-plt.plot(data2[:, 2], data2[:, 5], 'b.')
+plt.plot(dataB[:, 2], dataB[:, 5], 'b.')
 plt.grid()
 plt.show()
