@@ -22,12 +22,12 @@ arr4 = np.random.randint(2, 6, (3, 3))
 print('Матрица с случайными целочисленными значениями \n',arr4)
 
 # ЗАДАНИЕ №2
-data = np.loadtxt(r'D:\Папка\Учеба\5 семестр\ОКИтД. Практические задания\Практика №3\text.txt', dtype=np.int32)
+data = np.loadtxt(r'text.txt', dtype=np.int32)
 print('Переменные из текстового файла \n')
 print(data)
 
 # ЗАДАНИЕ №3
-data1 = scipy.io.loadmat(r'D:\Папка\Учеба\5 семестр\ОКИтД. Практические задания\Практика №3\data\1D\var3.mat')
+data1 = scipy.io.loadmat(r'var3.mat')
 dataA = data1['n']
 maxx = np.max(dataA) # максимальная 
 print('Рассчет максимального = ', maxx)
@@ -76,7 +76,7 @@ plt.plot(cor)
 plt.show()
 
 # ЗАДАНИЕ №6
-data2 = scipy.io.loadmat(r'D:\Папка\Учеба\5 семестр\ОКИтД. Практические задания\Практика №3\data\ND\var2.mat')
+data2 = scipy.io.loadmat(r'var2.mat')
 dataB = data2['mn']
 
 # ЗАДАНИЕ №7
