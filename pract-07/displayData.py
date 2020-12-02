@@ -1,48 +1,44 @@
-import numpy as np
-from matplotlib import use
+import numpy 
+import scipy.io
+from displayData import displayData
+from predict import predict
 import matplotlib.pyplot as plt
 
+# ЗАДАНИЕ №1
+test_set = scipy.io.loadmat('test_set.mat')
+weights = scipy.io.loadmat('weights.mat')
 
-def displayData(X, title=''):
+# ЗАДАНИЕ №2
+X_test = test_set['X']
+y_test = numpy.int64(test_set['y']).ravel()
+Theta1 = weights['Theta1']
+Theta2 = weights['Theta2']
+m = X_test.shape[0]
 
-    # Вычислить строки, столбцы
-    m, n = X.shape
-    example_width = int(round(np.sqrt(n)))
-    example_height = int(n / example_width)
 
-    # Вычислить количество отображаемых элементов
-    display_rows = int(np.floor(np.sqrt(m)))
-    display_cols = int(np.ceil(m / display_rows))
+# ЗАДАНИЕ №3
+Index = numpy.random.permutation(m)
+k = X_test[Index[:100]]
+displayData(k)
 
-    # Заполнение между изображениями
-    pad = 1
+# ЗАДАНИЕ №6
+pre = predict(Theta1, Theta2, X_test)
+result = numpy.mean(numpy.double(pre == y_test))
+print(result)
 
-    # Настройка пустого дисплея
-    display_array = - np.ones((pad + display_rows * (example_height + pad),
-                           pad + display_cols * (example_width + pad)))
-
-    # Скопируйте каждый пример в патч на массиве дисплея
-    curr_ex = 0
-    for j in np.arange(display_rows):
-        for i in np.arange(display_cols):
-            if curr_ex > m:
-                break
-            # Get the max value of the patch
-            max_val = np.max(np.abs(X[curr_ex, : ]))
-            rows = [pad + j * (example_height + pad) + x for x in np.arange(example_height+1)]
-            cols = [pad + i * (example_width + pad)  + x for x in np.arange(example_width+1)]
-            display_array[min(rows):max(rows), min(cols):max(cols)] = X[curr_ex, :].reshape(example_height, example_width) / max_val
-            curr_ex = curr_ex + 1
-        if curr_ex > m:
-            break
-
-    # Показать изображение
-    display_array = display_array.astype('float32')
-    plt.imshow(display_array.T)
-    plt.set_cmap('gray')
-    plt.title(title)
-
-    # Не показывать ось
-    plt.axis('off')
-    plt.show()
-
+# ЗАДАНИЕ №7
+rp = numpy.random.permutation(m)
+plt.figure()
+for i in range(5):
+    X2 = X_test[rp[i],:]
+    X2 = numpy.matrix(X_test[rp[i]])
+    pred = predict(Theta1, Theta2, X2.getA())
+    pred = numpy.squeeze(pred)
+    pred_str = 'Neural Network Prediction: %d (digit %d)' % (pred, y_test[rp[i]])
+    displayData(X2, pred_str)
+    plt.close()
+ 
+# ЗАДАНИЕ №8
+Error = numpy.where(pre != y_test)[0]
+q = X_test[Error[:100]]    
+displayData(q)
